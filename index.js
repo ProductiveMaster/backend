@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 
 const config = require('./config/index');
 const db = require('./lib/db');
@@ -25,12 +26,10 @@ const Company = require('./models/companies');
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
 app.use(cors())
-app.use(express.urlencoded({
-    extended: false
-}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(helmet());
 
 app.get('/api', (req, res) => {
     res.send('Hello World');

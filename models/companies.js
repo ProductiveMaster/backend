@@ -21,8 +21,8 @@ const companiesSchema = new Schema({
     cityBase: { type: String },
     webPage: { type: String, lowercase: true },
     about: { type: String, required: true },
-    contacts: [ contacts ],
-    rates: [ rates ]
+    contacts: [ companyContactSchema ],
+    rates: [ companyRateSchema ]
 });
 
 module.exports = model('Companies', companiesSchema)
