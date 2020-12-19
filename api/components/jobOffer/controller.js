@@ -1,5 +1,3 @@
-const offersRoutes = require("./routes");
-
 module.exports = function (injectedStore) {
     let store = injectedStore;
 

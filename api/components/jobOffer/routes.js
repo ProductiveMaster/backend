@@ -23,7 +23,7 @@ function offersRoutes(app, store) {
         scopesValidationHandler(['update:joboffer']),
         OffersService.updateOffer);
 
-    router.delete('/offerId',
+    router.delete('/:offerId',
         passport.authenticate('jwt', { session: false }),
         scopesValidationHandler(['delete:joboffer']),
         OffersService.deleteOffer);

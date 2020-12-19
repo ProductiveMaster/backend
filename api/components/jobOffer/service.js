@@ -57,7 +57,7 @@ function jobOffersService(injectedStore) {
         const { params } = req;
         try {
             const deletedOffer = await Controller.deleteOffer(params.offerId);
-            if(!deleteOffer)
+            if(!deletedOffer)
                 next(boom.notFound('Offer not found'));
             else
                 response.success(req, res, deletedOffer, 201);

@@ -14,4 +14,4 @@ const masterStudentsSchema = new Schema({
     tpCoach: { type: Schema.Types.ObjectId, ref: 'Users', required: true }
 }, { timestamps: true });
 
-module.exports = model('masterStudents', masterStudentsSchema);
+module.exports = model('MasterStudents', masterStudentsSchema);

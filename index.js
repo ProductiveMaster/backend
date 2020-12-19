@@ -9,7 +9,7 @@ const { logErrors, errorHandler, } = require('./utils/middleware/errorHandler');
 //Routes Call
 const userRoutes = require('./api/components/user/routes');
 const authRoutes = require('./api/components/auth/routes');
-const jobOffersRoutes = require('./api/components/jobOffers/routes');
+const jobOffersRoutes = require('./api/components/jobOffer/routes');
 
 //Models
 const User = require('./models/users');
