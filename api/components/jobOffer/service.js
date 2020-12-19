@@ -68,7 +68,7 @@ function jobOffersService(injectedStore) {
 
     const searchOffers = async(req, res, next) => {
         const { params } = req;
-        const type = req.query.type.toString();
+        const type = req.query.type;
         try {
             const searchResult = await Controller.search(params.filter, type);
             response.success(req, res, searchResult, 200);
