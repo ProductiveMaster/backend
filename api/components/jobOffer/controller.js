@@ -1,6 +1,6 @@
 module.exports = function (injectedStore) {
     let store = injectedStore;
-    const PAGE_SIZE = 2;
+    const PAGE_SIZE = 1;
 
     async function createOffer(data) {
         const created = new store(data);
@@ -59,8 +59,6 @@ module.exports = function (injectedStore) {
             console.log(error);
         }
     }
-
-
 
 
 
