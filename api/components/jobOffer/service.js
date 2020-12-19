@@ -8,8 +8,8 @@ function jobOffersService(injectedStore) {
 
     const getOffers = async (req, res, next) => {
         try {
-            //const page = parseInt(req.query.page);
-            const offers = await Controller.getOffers();
+            const page = parseInt(req.query.page);
+            const offers = await Controller.getOffers(page);
             response.success(req, res, offers, 200);
         } catch (error) {
             next(boom.boomify(error, { statusCode: 500 }));
@@ -66,12 +66,24 @@ function jobOffersService(injectedStore) {
         }
     }
 
+    const searchOffers = async(req, res, next) => {
+        const { params } = req;
+        const type = req.query.type.toString();
+        try {
+            const searchResult = await Controller.search(params.filter, type);
+            response.success(req, res, searchResult, 200);
+        } catch (error) {
+            next(boom.boomify(error, { statusCode: 500 }));
+        }
+    }
+
     return {
         createOffer,
         updateOffer,
         deleteOffer,
         getOffer,
-        getOffers
+        getOffers,
+        searchOffers
     }
 }
 

@@ -42,7 +42,7 @@ function authService(injectedStore) {
                     };
 
                     const token = jwt.sign(payload, config.AUTH_JWT_SECRET, {
-                        expiresIn: '30m'
+                        expiresIn: '60m'
                     });
 
                     return response.success(req, res, { token, user: user }, 200);

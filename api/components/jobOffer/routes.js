@@ -33,10 +33,16 @@ function offersRoutes(app, store) {
         scopesValidationHandler(['read:joboffer']),
         OffersService.getOffers);
 
+    router.get('/search/:filter?',
+        passport.authenticate('jwt', { session: false }),
+        scopesValidationHandler(['read:joboffer']),
+        OffersService.searchOffers);
+
     router.get('/:offerId',
         passport.authenticate('jwt', { session: false }),
         scopesValidationHandler(['read:joboffer']),
         OffersService.getOffer);
+
 }
 
 module.exports = offersRoutes;

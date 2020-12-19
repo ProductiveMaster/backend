@@ -1,5 +1,6 @@
 module.exports = function (injectedStore) {
     let store = injectedStore;
+    const PAGE_SIZE = 20;
 
     async function createOffer(data) {
         const created = new store(data);
@@ -11,7 +12,7 @@ module.exports = function (injectedStore) {
         const updated = await store.findOneAndUpdate({ _id: offerId }, data, {
             new: true,
             runValidators: true
-        }); 
+        });
         return updated || false;
     }
 
@@ -20,9 +21,16 @@ module.exports = function (injectedStore) {
         return deletedOffer;
     }
 
-    async function getOffers() {
-        const offers = await store.find();
-        return offers || [];
+    async function getOffers(page = 1) {
+        const skip = (page - 1) * PAGE_SIZE;
+        const offers = await store.find().skip(skip).limit(PAGE_SIZE);
+        const count = await store.countDocuments();
+        const paginatedResponse = {
+            totalPages: Math.ceil(count / PAGE_SIZE),
+            currentPage: page,
+            offers: offers
+        };
+        return paginatedResponse || [];
     }
 
     async function getOffer(offerQuery) {
@@ -30,11 +38,34 @@ module.exports = function (injectedStore) {
         return offer || false;
     }
 
-    return { 
+    async function search(filter, type) {
+        try {
+            let searchedOffers;
+            if (!filter && !type)
+                return await getOffers();
+            else if (!filter && type)
+                searchedOffers = await store.find({ "category": { $regex: type, $options: 'i' } });
+            else if (filter && !type)
+                searchedOffers = await store.find({ "description": { $regex: filter, $options: 'i' } });
+            else
+                searchedOffers = await store.find().and(
+                    [
+                        { "description": { $regex: filter, $options: 'i' } },
+                        { "category": { $regex: type, $options: 'i' } }
+                    ]);
+
+            return searchedOffers || [];
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    return {
         createOffer,
         updateOffer,
         deleteOffer,
         getOffers,
-        getOffer
+        getOffer,
+        search
     }
 }
