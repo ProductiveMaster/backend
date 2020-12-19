@@ -35,7 +35,6 @@ function authService(injectedStore) {
                         next(boom.unauthorized('Invalid user type'));
 
                     const { _id: id, name, email } = user;
-                    console.log(apiKey);
                     const payload = {
                         sub: id,
                         name,
@@ -47,7 +46,7 @@ function authService(injectedStore) {
                         expiresIn: '30m'
                     });
 
-                    return response.success(req, res, { token, user: { id, name, email } }, 200);
+                    return response.success(req, res, { token, user: user }, 200);
                 });
             } catch (error) {
                 next(error)
@@ -59,12 +58,17 @@ function authService(injectedStore) {
         const UserController = userController(userModel);
         const user = req.body;
         try {
-            //assign default profile
-            if(!user.type)
-                user.type = DEFAULT_PROFILE;
+            const findUser = await UserController.getUserByEmail(user.email);
+            if (findUser)
+                next(boom.unauthorized('Email already exists'));
+            else {
+                //assign default profile
+                if (!user.type)
+                    user.type = DEFAULT_PROFILE;
 
-            const createdUser = await UserController.createUser(user);
-            response.success(req, res, createdUser, 201);
+                const createdUser = await UserController.createUser(user);
+                response.success(req, res, createdUser, 201);
+            }
         } catch (error) {
             console.log(error);
             next(error);

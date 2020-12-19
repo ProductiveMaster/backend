@@ -1,7 +1,7 @@
 const { Schema, model, SchemaTypes } = require('mongoose');
 
 const offerApplicationSchema = new Schema({
-    userId: { type: SchemaTypes.Types.ObjectId, ref: 'Users'},
+    userId: { type: Schema.Types.ObjectId, ref: 'Users'},
     applicationDate: { type: Date }
 });
 
@@ -23,7 +23,7 @@ const jobOffersSchema = new Schema({
     responsabilities: [ String ],
     isRemote: { type:Boolean, default: false },
     isActive: { type: Boolean, default: true },
-    applications: [ offerApplications ],
+    applications: [ offerApplicationSchema ],
 }, { timestamps: true });
 
 module.exports = model('JobOffers', jobOffersSchema);

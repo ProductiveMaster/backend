@@ -1,4 +1,3 @@
-
 const boom = require('@hapi/boom');
 
 function scopesValidationHandler(allowedScopes) {
@@ -15,7 +14,7 @@ function scopesValidationHandler(allowedScopes) {
         if (hasAcces) {
             next();
         } else {
-            next(boom.unauthorized('nsufficient Scopes'));
+            next(boom.unauthorized('Insufficient Scopes'));
         }
     }
 }
