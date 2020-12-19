@@ -77,6 +77,7 @@ function jobOffersService(injectedStore) {
         }
     }
 
+
     return {
         createOffer,
         updateOffer,

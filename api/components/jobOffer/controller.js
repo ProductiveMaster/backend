@@ -1,6 +1,6 @@
 module.exports = function (injectedStore) {
     let store = injectedStore;
-    const PAGE_SIZE = 20;
+    const PAGE_SIZE = 2;
 
     async function createOffer(data) {
         const created = new store(data);
@@ -27,7 +27,7 @@ module.exports = function (injectedStore) {
         const count = await store.countDocuments();
         const paginatedResponse = {
             totalPages: Math.ceil(count / PAGE_SIZE),
-            currentPage: page,
+            currentPage: page ? page : 1,
             offers: offers
         };
         return paginatedResponse || [];
@@ -59,6 +59,10 @@ module.exports = function (injectedStore) {
             console.log(error);
         }
     }
+
+
+
+
 
     return {
         createOffer,

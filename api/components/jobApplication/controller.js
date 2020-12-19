@@ -21,7 +21,7 @@ module.exports = function (injectedStore) {
     }
 
     async function getApplications() {
-        const applications = await store.find().populate('studentId').populate('jobId').populate('studentId.tpCoach');
+        const applications = await store.find().populate('studentId').populate('jobId').populate('tpCoach');
         return applications || [];
     }
 
