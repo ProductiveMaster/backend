@@ -28,6 +28,7 @@ function authService(injectedStore) {
                     if (error)
                         next(error);
 
+                    console.log(user);
                     const apiKey = await Controller.getApiKey(user.type);
 
                     if (!apiKey)

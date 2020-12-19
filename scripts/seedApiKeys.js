@@ -1,4 +1,4 @@
-// DEBUG=app:* node scripts/mongo/seedApiKeys.js
+// DEBUG=app:* node scripts/seedApiKeys.js
 const chalk = require('chalk');
 const crypto = require('crypto');
 const debug = require('debug')('app:scripts:api-keys');
@@ -11,16 +11,34 @@ const adminScopes = [
   'create:users',
   'update:users',
   'delete:users',
+  'create:joboffer', 
+  'update:joboffer',
+  'delete:joboffer',
+  'read:joboffer',
+  'update:jobapplication',
+  'read:jobapplication'
 ];
 
 const masterScopes = [
   'signin:auth',
-  'signup:auth'
+  'signup:auth',
+  'create:users',
+  'create:joboffer',
+  'update:joboffer',
+  'read:joboffer',
+  'create:jobapplication',
+  'update:jobapplication',
+  'read:jobapplication'
 ];
 
 const tpCoachScopes = [
   'signin:auth',
-  'signup:auth'
+  'signup:auth',
+  'create:joboffer',
+  'update:joboffer',
+  'read:joboffer',
+  'update:jobapplication',
+  'read:jobapplication'
 ];
 
 const apiKeys = [

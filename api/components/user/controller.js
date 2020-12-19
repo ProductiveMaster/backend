@@ -36,6 +36,11 @@ module.exports = function(injectedStore){
         return user || false;
     }
 
+    async function getUsersBySkills(skills) {
+        const usersBySkills = await store.find({ "skills": { $in : skills } });
+        return usersBySkills || [];
+    }
+
 
     return {
         createUser,
@@ -43,6 +48,7 @@ module.exports = function(injectedStore){
         deleteUser,
         getUser,
         getUsers,
-        getUserByEmail
+        getUserByEmail,
+        getUsersBySkills
     }
 }
