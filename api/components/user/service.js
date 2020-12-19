@@ -1,5 +1,6 @@
 const response = require('../../../utils/response');
 const controller = require('./controller');
+const boom = require('@hapi/boom');
 
 function userService(injectedStore) {
     let store = injectedStore;
@@ -10,7 +11,7 @@ function userService(injectedStore) {
             const users = await Controller.getUsers();
             response.success(req, res, users, 200);
         } catch (error) {
-            next(error);
+            next(boom.boomify(error, { statusCode: 500 }));
         }
     }
 
@@ -21,13 +22,10 @@ function userService(injectedStore) {
             if (user) {
                 response.success(req, res, user, 200);
             } else {
-                response.error(req, res, [{
-                    "msg": "User not found",
-                    "param": "USER_NOT_FOUND"
-                }], 400);
+                next(boom.notFound('User not found'));
             }
         } catch (error) {
-            next(error);
+            next(boom.boomify(error, { statusCode: 500 }));
         }
     };
 
@@ -37,22 +35,24 @@ function userService(injectedStore) {
             const createdUser = await Controller.createUser(data);
             response.success(req, res, createdUser, 201);
         } catch (error) {
-            next(error);
+            next(boom.boomify(error, { statusCode: 500 }));
         }
     };
 
     const updateUser = async (req, res, next) => {
         const { params } = req;
         const { body: data } = req;
+
         try {
             const updatedUser = await Controller.updateUser(params.userId, data);
-            if (!updatedUser) response.error(req, res, [{
-                "msg": "User not found",
-                "param": "USER_NOT_FOUND"
-            }], 400);
-            response.success(req, res, updatedUser, 200);
+
+            if (!updatedUser)
+                next(boom.notFound('User not found'));
+            else
+                response.success(req, res, updatedUser, 200);
+
         } catch (error) {
-            next(error);
+            next(boom.boomify(error, { statusCode: 500 }));
         }
     };
 
@@ -60,13 +60,12 @@ function userService(injectedStore) {
         const { params } = req;
         try {
             const deletedUser = await Controller.deleteUser(params.userId);
-            if (!deletedUser) response.error(req, res, [{
-                "msg": "User not found",
-                "param": "USER_NOT_FOUND"
-            }], 400);
-            response.success(req, res, deletedUser, 201);
+            if (!deletedUser)
+                next(boom.notFound('User not found'));
+            else
+                response.success(req, res, deletedUser, 201);
         } catch (error) {
-            next(error);
+            next(boom.boomify(error, { statusCode: 500 }));
         }
     };
 

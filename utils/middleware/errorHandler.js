@@ -28,6 +28,8 @@ function errorHandler(err, req, res, next) {
   } = err;
 res.status(statusCode);
 res.json(withErrorStack(payload, err.stack));
+console.log(err);
+
 }
 
 module.exports = {

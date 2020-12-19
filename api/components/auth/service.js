@@ -6,7 +6,6 @@ const config = require('../../../config/index');
 
 const userController = require('../user/controller');
 const userModel = require('../../../models/users');
-const apiKeyModel = require('../../../models/apiKeys');
 
 const boom = require('@hapi/boom');
 

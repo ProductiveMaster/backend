@@ -8,7 +8,7 @@ module.exports = function(injectedStore){
     }
     
     async function updateUser(userId, data) {
-        const updated = await store.findOneAndUpdate({ userId }, data, {
+        const updated = await store.findOneAndUpdate({ _id: userId }, data, {
             new: true,
             runValidators: true
         });
