@@ -8,7 +8,9 @@ const jobApplicationSchema = new Schema({
     qualification: { type: Number },
     tpCoachComments: { type: String },
     studentComments: { type: String },
-    meetingDate: { type: String }
+    meetingDate: { type: String },
+    hiredDate: { type: Date },
+    salary: { type: Number }
 });
 
 module.exports = model('JobApplications', jobApplicationSchema);
