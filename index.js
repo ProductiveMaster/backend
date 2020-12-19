@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config()
 
 const config = require('./config/index');
 const db = require('./lib/db');
@@ -13,7 +12,7 @@ app.use(express.urlencoded({
 }));
 
 app.get('/api', (req, res) => {
-    res.send('Hello World')
+    res.send('Hello World');
 });
 
 //Database Connect
