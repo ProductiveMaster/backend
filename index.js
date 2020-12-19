@@ -18,9 +18,14 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(cors())
+app.use(express.urlencoded({
+    extended: false
+}));
 
-app.get('/api', (req, res) => { res.send('Hello World') });
+app.get('/api', (req, res) => {
+    res.send('Hello World');
+});
 
 //Database Connect
 db.connect();
