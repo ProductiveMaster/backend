@@ -9,6 +9,7 @@ var offerApplications = model('OfferApplications', offerApplicationSchema);
 
 const jobOffersSchema = new Schema({
     companyId: { type: Schema.Types.ObjectId, ref: 'Companies' },
+    companyName: { type: String },
     tittleOffer: { type: String, required: true },
     description: { type:String, required: [true, 'Job Offer must have a description'] },
     salaryFrom: { type:Number },
