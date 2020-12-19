@@ -20,7 +20,7 @@ userSchema.pre('save', async function(next) {
 });
 
 userSchema.methods.toJSON = function() {
-    var obj = this.Object();
+    var obj = this.toObject();
     delete obj.password;
     return obj;
 }

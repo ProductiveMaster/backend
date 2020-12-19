@@ -3,8 +3,10 @@ const controller = require('./controller');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../../../config/index');
-const userService = require('../user/service');
+
+const userController = require('../user/controller');
 const userModel = require('../../../models/users');
+
 const boom = require('@hapi/boom');
 
 //Basic Strategy
@@ -55,9 +57,10 @@ function authService(injectedStore) {
     };
 
     const signUp = async (req, res, next) => {
-        const UserService = userService(userModel);
+        const UserController = userController(userModel);
+        const user = req.body;
         try {
-            const createdUser = await UserService.createUser(req, res, next);
+            const createdUser = await UserController.createUser(user);
             response.success(req, res, createdUser, 201);
         } catch (error) {
             console.log(error);
