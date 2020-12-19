@@ -6,6 +6,7 @@ const config = require('../../../config/index');
 
 const userController = require('../user/controller');
 const userModel = require('../../../models/users');
+const apiKeyModel = require('../../../models/apiKeys');
 
 const boom = require('@hapi/boom');
 
@@ -15,11 +16,9 @@ require('../../../utils/auth/strategies/basic');
 function authService(injectedStore) {
     let store = injectedStore;
     const Controller = controller(store);
+    const DEFAULT_PROFILE = 'master';
 
     const signIn = async (req, res, next) => {
-        const { apiKeyToken } = req.body;
-        if (!apiKeyToken)
-            next(boom.unauthorized('Api Key is required'));
 
         passport.authenticate('basic', function (error, user) {
             try {
@@ -30,13 +29,13 @@ function authService(injectedStore) {
                     if (error)
                         next(error);
 
-                    const apiKey = await Controller.getApiKey(apiKeyToken);
+                    const apiKey = await Controller.getApiKey(user.type);
 
-                    if (!apiKeyToken)
-                        next(boom.unauthorized('Invalid Api Key Token'));
+                    if (!apiKey)
+                        next(boom.unauthorized('Invalid user type'));
 
                     const { _id: id, name, email } = user;
-
+                    console.log(apiKey);
                     const payload = {
                         sub: id,
                         name,
@@ -60,6 +59,10 @@ function authService(injectedStore) {
         const UserController = userController(userModel);
         const user = req.body;
         try {
+            //assign default profile
+            if(!user.type)
+                user.type = DEFAULT_PROFILE;
+
             const createdUser = await UserController.createUser(user);
             response.success(req, res, createdUser, 201);
         } catch (error) {

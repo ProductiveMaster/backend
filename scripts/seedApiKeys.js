@@ -1,6 +1,6 @@
 // DEBUG=app:* node scripts/mongo/seedApiKeys.js
 const chalk = require('chalk');
-const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const debug = require('debug')('app:scripts:api-keys');
 const MongoLib = require('../lib/db');
 
@@ -13,7 +13,12 @@ const adminScopes = [
   'delete:users',
 ];
 
-const publicScopes = [
+const masterScopes = [
+  'signin:auth',
+  'signup:auth'
+];
+
+const tpCoachScopes = [
   'signin:auth',
   'signup:auth'
 ];
@@ -21,16 +26,23 @@ const publicScopes = [
 const apiKeys = [
   {
     token: generateRandomToken(),
-    scopes: adminScopes
+    scopes: adminScopes,
+    type: 'admin'
   },
   {
     token: generateRandomToken(),
-    scopes: publicScopes
+    scopes: masterScopes,
+    type: 'master'
+  },
+  {
+    token: generateRandomToken(),
+    scopes: tpCoachScopes,
+    type: 'tpcoach'
   }
 ];
 
 function generateRandomToken() {
-  const buffer = bcrypt.randomBytes(32);
+  const buffer = crypto.randomBytes(32);
   return buffer.toString('hex');
 }
 

@@ -10,7 +10,7 @@ const userSchema = new Schema({
     birthDate: { type: Date }, 
     password: { type: String, required: true }, 
     imgPath: { type: String },
-    type: { type: Number }
+    type: { type: String, lowercase: true }
 }, { timestmaps:true });
 
 userSchema.pre('save', async function(next) {

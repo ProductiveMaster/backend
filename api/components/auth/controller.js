@@ -2,8 +2,8 @@
 module.exports = function (injectedStore) {
     let store = injectedStore;
 
-    async function getApiKey(token) {
-        const apiKey = await store.findOne({ token: token });
+    async function getApiKey(userType) {
+        const apiKey = await store.findOne({ type: userType });
         return apiKey || false;
     }
 

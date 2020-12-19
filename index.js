@@ -12,6 +12,7 @@ const authRoutes = require('./api/components/auth/routes');
 
 //Models
 const User = require('./models/users');
+const ApiKey = require('./models/apiKeys');
 
 
 const app = express();
@@ -32,7 +33,7 @@ db.connect();
 
 //Routes
 userRoutes(app, User);
-authRoutes(app, User);
+authRoutes(app, ApiKey);
 
 app.use(logErrors);
 app.use(errorHandler);
