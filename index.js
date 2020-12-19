@@ -5,7 +5,7 @@ const config = require('./config/index');
 const db = require('./lib/db');
 
 const app = express();
-app.use(express.json);
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/api', (req, res) => { res.send('Hello World') });
